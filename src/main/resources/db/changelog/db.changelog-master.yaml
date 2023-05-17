@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - include:
+      file: /001_cria_tabela_pauta.xml
+      relativeToChangelogFile: true
+  - include:
+      file: /002_cria_tabela_sessao_votacao_pauta.xml
+      relativeToChangelogFile: true
+  - include:
+      file: /003_cria_tabela_voto_pauta.xml
+      relativeToChangelogFile: true

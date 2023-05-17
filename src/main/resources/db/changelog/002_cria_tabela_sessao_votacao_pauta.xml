@@ -1,0 +1,26 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="criaTabelaSessaoVotacaoPauta" author="iago_lopes">
+        <createTable tableName="SESSAO_VOTACAO_PAUTA">
+            <column name="id_pauta" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="tempo_votacao" type="INTEGER" defaultValue="60">
+                <constraints nullable="false"/>
+            </column>
+            <column name="data_hora_inicio" type="TIMESTAMP" defaultValueComputed="current_timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="SESSAO_VOTACAO_PAUTA"
+                                 baseColumnNames="id_pauta"
+                                 referencedTableName="PAUTA"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_sessao_votacao_pauta_pauta"/>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,33 @@
+version: '3'
+services:
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: votacao-pauta-gerenciador_user
+      POSTGRES_PASSWORD: votacao-pauta-gerenciador-user_pass
+      POSTGRES_DB: votacao_pauta_gerenciador
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "votacao-pauta-gerenciador_user", "-d", "votacao_pauta_gerenciador" ]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  spring-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./target:/app/target
+
+volumes:
+  postgres-data:
